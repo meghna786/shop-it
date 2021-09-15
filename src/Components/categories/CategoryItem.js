@@ -1,8 +1,15 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'rsuite';
+import { useAddToCart } from '../context/addToCart.context';
 
-const CategoryItem = ({ product, addedToCart }) => {
+const CategoryItem = ({ product }) => {
+  const [productItem, setProduct] = useState({});
+  useEffect(() => {
+    setProduct(product);
+  }, [product]);
   const {
     id,
     name,
@@ -12,11 +19,29 @@ const CategoryItem = ({ product, addedToCart }) => {
     thumbnail,
     inStock,
     categoryId,
-  } = product;
+  } = productItem;
 
-const addToCart=()=>{
-  addedToCart.push(product);
-}
+  const addedToCart = useAddToCart();
+  const [addToCartArr, setAddToCart] = useState([]);
+
+  useEffect(() => {
+    setAddToCart(addedToCart);
+  }, [addedToCart]);
+
+  // const isNotInCart = () => {
+  //   if (product && addToCartArr) {
+  //     addToCartArr.forEach(item => {
+  //       console.log(`is is ${id} and item.id is ${item.id}`);
+  //       if (id === item.id) return false;
+  //     });
+  //   }
+  // };
+
+  const addToCart = () => {
+    addToCartArr.push(productItem);
+  };
+
+  // const itsNotInCart = isNotInCart();
 
   return (
     <div style={{ margin: '2rem' }}>
@@ -35,7 +60,20 @@ const addToCart=()=>{
         <h5 style={{ color: 'red' }}> Out of Stock </h5>
       )}
 
-      <Button disabled={!inStock} onClick={addToCart}>Add To Cart</Button>
+<Button disabled={!inStock} onClick={addToCart}>
+          Add To Cart
+        </Button>
+
+      {/* {itsNotInCart && (
+        <Button disabled={!inStock} onClick={addToCart}>
+          Add To Cart
+        </Button>
+      )}
+      {!itsNotInCart && (
+        <Button componentClass={Link} to="/checkout">
+          Go To Cart
+        </Button>
+      )} */}
     </div>
   );
 };

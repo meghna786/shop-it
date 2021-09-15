@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { Checkbox } from 'rsuite';
+import { Link } from 'react-router-dom';
+import { Button, Checkbox } from 'rsuite';
 import CategoryItem from '../Components/categories/CategoryItem';
 import products from '../data-files/products.json';
-import Checkout from './Checkout';
 
 const Categories = () => {
   const { categoryID } = useParams();
   const productsArray = [];
   const filteredArray = [];
   const [isChecked, setIsChecked] = useState(false);
-  const addedToCart=[];
 
   const selectedProductsArray = productsArr => {
     productsArr.forEach(product => {
@@ -49,7 +48,6 @@ const Categories = () => {
           <CategoryItem
             product={product}
             key={product.id}
-            addedToCart={addedToCart}
           />
         ))}
 
@@ -59,8 +57,10 @@ const Categories = () => {
           Delivery
         </Checkbox>
       </div>
+    <div >
+    <Button componentClass={Link} to='/checkout'>Go To Cart </Button>
+    </div>
 
-      <Checkout addedToCart={addedToCart}/>
     </div>
   );
 };
