@@ -3,7 +3,9 @@ import ItemInCart from '../Components/checkout/ItemInCart';
 import { useAddToCart } from '../Components/context/addToCart.context';
 
 const Checkout = () => {
-  let addedToCart = useAddToCart();
+      const [addedToCart, setAddedToCart] = useAddToCart();
+      let deletingProduct=[];
+
 
   const initialCostCalc=(qty=1)=>{
       let cost= 0;
@@ -15,16 +17,18 @@ const Checkout = () => {
   const [totalCost, setTotalCost]=useState(initialCostCalc());
 
 
-  const deleteItem = item => {
-      addedToCart = addedToCart.filter(
+  const calcTotalCost=(qty, price)=>{
+      const cost = qty*price;
+      setTotalCost(totalCost+ cost);
+   }
+
+  const deleteItem = (item, price) => {
+      deletingProduct =addedToCart.filter(
         deleteThisItem => deleteThisItem.id !== item.id
       );
+      calcTotalCost(1,-price);
+      setAddedToCart(deletingProduct);
     };
-
-    const calcTotalCost=(qty, price)=>{
-       const cost = qty*price;
-       setTotalCost(totalCost+ cost);
-    }
 
   return (
         <>

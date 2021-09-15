@@ -1,18 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Button, Icon } from 'rsuite';
 
 const ItemInCart = ({item, deleteItem, calcTotalCost}) => {
       const [qty, setQty]=useState(1);
       const {
-            id,
             name,
             price,
             currency,
-            delivery,
             thumbnail,
-            inStock,
-            categoryId,
           } = item;
       
           const increaseQty=()=>{
@@ -22,7 +17,7 @@ const ItemInCart = ({item, deleteItem, calcTotalCost}) => {
 
           const decreaseQty=()=>{
                 if(qty<=1){
-                     deleteItem(item);
+                     deleteItem(item,price);
                 }
                 else 
                { setQty(p=>p-1);

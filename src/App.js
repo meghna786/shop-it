@@ -13,9 +13,11 @@ function App() {
       <div className="App">
         <AddToCartProvider>
           <Switch>
+
             <Route exact path="/">
               <Home />
             </Route>
+
             <Route exact path="/category/:categoryID">
               <Categories />
             </Route>
@@ -23,6 +25,7 @@ function App() {
             <Route exact path="/checkout">
               <Checkout />
             </Route>
+            
           </Switch>
         </AddToCartProvider>
       </div>
