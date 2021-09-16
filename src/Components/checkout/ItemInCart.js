@@ -31,6 +31,7 @@ const ItemInCart = ({item, deleteItem, calcTotalCost}) => {
                   <h5>{currency} {price}</h5>
                   <Button onClick={decreaseQty}><Icon icon='minus-circle' /></Button>
                   <Button onClick={increaseQty}><Icon icon='plus-circle' /></Button>
+                  <Button onClick={()=>deleteItem(item,price, qty)}><Icon icon='close-circle' /></Button>
                   <span>{qty}</span>
             </div>
       )

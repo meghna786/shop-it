@@ -22,11 +22,11 @@ const Checkout = () => {
       setTotalCost(totalCost+ cost);
    }
 
-  const deleteItem = (item, price) => {
+  const deleteItem = (item, price, qty=1) => {
       deletingProduct =addedToCart.filter(
         deleteThisItem => deleteThisItem.id !== item.id
       );
-      calcTotalCost(1,-price);
+      calcTotalCost(qty,-price);
       setAddedToCart(deletingProduct);
     };
 
