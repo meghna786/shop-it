@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Checkbox } from 'rsuite';
 import CategoryItem from '../Components/categories/CategoryItem';
-import products from '../data-files/products.json';
+import productsFile from '../data-files/products.json';
 
 const Categories = () => {
   const { categoryID } = useParams();
   const productsArray = [];
   const filteredArray = [];
   const [isChecked, setIsChecked] = useState(false);
+  const [products, setProducts]=useState([]);
+
+  useEffect(() => {
+    setProducts(productsFile);  
+  }, [])
 
   const selectedProductsArray = productsArr => {
     productsArr.forEach(product => {

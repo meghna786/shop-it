@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'rsuite';
 import CategoryType from '../Components/home/CategoryType';
-import categories from '../data-files/categories.json';
+import categoriesFile from '../data-files/categories.json';
 
 const Home = () => {
+  const [categories,setCategories]=useState([]);
+  useEffect(() => {
+    setCategories(categoriesFile);
+  }, []);
   return (
     <>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
