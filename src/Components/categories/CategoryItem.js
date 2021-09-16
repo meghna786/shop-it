@@ -4,7 +4,7 @@ import { Button } from 'rsuite';
 import { useAddToCart } from '../context/addToCart.context';
 
 const CategoryItem = ({ product }) => {
-  const { id, name, price, currency, thumbnail, inStock } = product;
+  const {  name, price, currency, thumbnail, inStock } = product;
 
   const [addedToCart, setAddedToCart] = useAddToCart();
   const [isNotInCart, setIsNotInCart] = useState(true);
@@ -12,15 +12,8 @@ const CategoryItem = ({ product }) => {
   const addToCart = () => {
     addedToCart.push(product);
     setAddedToCart(addedToCart);
+    setIsNotInCart(false);
   };
-
-  const checkIfInCart=() =>{
-    addedToCart.forEach(element => {
-      if (element.id === id) {
-        setIsNotInCart(false);
-      }
-    });
-  }
 
   return (
     <div style={{ margin: '2rem' }}>
@@ -39,7 +32,6 @@ const CategoryItem = ({ product }) => {
         <h5 style={{ color: 'red' }}> Out of Stock </h5>
       )}
 
-      {checkIfInCart()}
       {isNotInCart && (
         <Button disabled={!inStock} onClick={addToCart}>
           Add To Cart
