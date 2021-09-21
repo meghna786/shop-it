@@ -1,20 +1,50 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'rsuite';
-import { useAddToCart } from '../context/addToCart.context';
 
 const CategoryItem = ({ product }) => {
-  const {  name, price, currency, thumbnail, inStock } = product;
+  const { id, name, price, currency, thumbnail, inStock } = product;
 
-  const [addedToCart, setAddedToCart] = useAddToCart();
-  const [isNotInCart, setIsNotInCart] = useState(true);
+  const [totalCost, setTotalCost] = useState(() => {
+    const cost = parseInt(localStorage.getItem('totalCost'), 10);
+    if (cost) {
+      return cost;
+    }
+    return 0;
+  });
+
+  const [addedToCart, setAddedToCart] = useState(() => {
+    return JSON.parse(localStorage.getItem('addedToCart') || '[]');
+  });
+
+  useEffect(() => {
+    localStorage.setItem('totalCost', JSON.stringify(totalCost));
+  }, [totalCost]);
+
+  useEffect(() => {
+    localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+  }, [addedToCart]);
+
+
+
 
   const addToCart = () => {
-    addedToCart.push(product);
-    setAddedToCart(addedToCart);
-    setIsNotInCart(false);
+    const datas = JSON.parse(localStorage.getItem('addedToCart'));
+    const costTillNow = parseInt(localStorage.getItem('totalCost'), 10);
+    const data = datas.find(d => d.id === id);
+    if (data) {
+      data.qty += 1;
+    } else {
+      product.qty = 1;
+      datas.push(product);
+    }
+
+    setAddedToCart(datas);
+    const cost = costTillNow + product.price;
+    setTotalCost(cost);
   };
 
+
+  
   return (
     <div style={{ margin: '2rem' }}>
       <img
@@ -32,17 +62,9 @@ const CategoryItem = ({ product }) => {
         <h5 style={{ color: 'red' }}> Out of Stock </h5>
       )}
 
-      {isNotInCart && (
-        <Button disabled={!inStock} onClick={addToCart}>
-          Add To Cart
-        </Button>
-      )}
-
-      {!isNotInCart && (
-        <Button disabled={!inStock} componentClass={Link} to="/checkout">
-          Go To Cart
-        </Button>
-      )}
+      <Button disabled={!inStock} onClick={addToCart}>
+        Add To Cart
+      </Button>
     </div>
   );
 };

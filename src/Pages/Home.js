@@ -5,19 +5,27 @@ import CategoryType from '../Components/home/CategoryType';
 import categoriesFile from '../data-files/categories.json';
 
 const Home = () => {
-  const [categories,setCategories]=useState([]);
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     setCategories(categoriesFile);
   }, []);
   return (
-    <>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {categories.map(category => (
-              <CategoryType category={category} key={category.id} />
-            ))}
-          </div>
-           <Button componentClass={Link} to='/checkout'>Go To Cart </Button>
-           </>
+    <div className="outer-container">
+      <div className="container">
+        {categories.map(category => (
+          <CategoryType category={category} key={category.id} />
+        ))}
+      </div>
+      <Button
+        componentClass={Link}
+        to="/checkout"
+        color="cyan"
+        className="btn-go-to-cart"
+        size='lg'
+      >
+        Go To Cart{' '}
+      </Button>
+    </div>
   );
 };
 

@@ -1,21 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Grid, Row } from 'rsuite';
+import { Button } from 'rsuite';
+import './home.scss';
 
-const CategoryType = ({category}) => {
-  const {name, description, id}=category;
+const CategoryType = ({ category }) => {
+  const { name, description, id } = category;
   return (
     <>
-      <Grid>
-        <Row className="show-grid">
-          <Col xs={8} componentClass={Link} to={`/category/${id}`}>
-            <div>
-              <h3>{name}</h3>
-              <p>{description}</p>
-            </div>
-          </Col>
-        </Row>
-      </Grid>
+      <div className="category-type">
+        <h3 className="name">{name}</h3>
+        <p className="description">{description}</p>
+
+        <Button
+          componentClass={Link}
+          to={`/category/${id}`}
+          className="lets-shop-btn"
+          block
+          color="cyan"
+          size="md"
+          appearance="ghost"
+        >
+          Lets shop
+        </Button>
+      </div>
     </>
   );
 };
