@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Icon } from 'rsuite';
+import './item-in-cart.scss';
 
 const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
   const { id, name, price, currency, thumbnail } = item;
@@ -47,26 +48,30 @@ const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
   };
 
   return (
-    <div style={{ margin: '2rem' }}>
+    <div className='cart-item-container'>
+      <div className='img'>
       <img
         src={thumbnail}
         alt="img"
-        style={{ width: '150px', borderRadius: '50px' }}
+        className='img-in-cart'
       />
-      <h5>{name}</h5>
-      <h5>
+      </div>
+    <div className='info'>
+      <h5 className='info-name'>{name}</h5>
+      <div className='info-price'>
         {currency} {price}
-      </h5>
-      <Button onClick={decreaseQty}>
+      </div>
+      <Button onClick={decreaseQty} className='btn-icon'>
         <Icon icon="minus-circle" />
       </Button>
-      <Button onClick={increaseQty}>
+      <Button onClick={increaseQty} className='btn-icon'>
         <Icon icon="plus-circle" />
       </Button>
-      <Button onClick={() => deleteItem(item)}>
+      <Button onClick={() => deleteItem(item)} className='btn-icon'>
         <Icon icon="close-circle" />
       </Button>
-      <span>{qty}</span>
+      <span className='info-qty'>{qty}</span>
+      </div>
     </div>
   );
 };

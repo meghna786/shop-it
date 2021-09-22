@@ -16,7 +16,7 @@ const CategoryType = ({ category }) => {
           to={`/category/${id}`}
           className="lets-shop-btn"
           block
-          color="cyan"
+          color='violet'
           size="md"
           appearance="ghost"
         >

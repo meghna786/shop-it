@@ -22,8 +22,7 @@ const Checkout = () => {
     localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
   }, [addedToCart]);
 
-
-  const calcCostWhenIncDec = (element, qty=1) => {
+  const calcCostWhenIncDec = (element, qty = 1) => {
     const cost = totalCost + qty * element.price;
     setTotalCost(cost);
   };
@@ -32,8 +31,8 @@ const Checkout = () => {
     let cost = 0;
     const datas = JSON.parse(localStorage.getItem('addedToCart'));
     const data = datas.find(d => d.id === item.id);
-    if(data){
-      cost = totalCost - (data.price *data.qty);
+    if (data) {
+      cost = totalCost - data.price * data.qty;
     }
     setTotalCost(cost);
     const deletingProduct = addedToCart.filter(
@@ -44,7 +43,7 @@ const Checkout = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div>
         {addedToCart.map(item => (
           <ItemInCart
             item={item}
@@ -54,7 +53,11 @@ const Checkout = () => {
           />
         ))}
       </div>
-      <h2>Total cost: {totalCost}</h2>
+      {totalCost === 0 ? (
+        <div className="total">Cart is Empty</div>
+      ) : (
+        <div className="total">Total cost: {totalCost}</div>
+      )}
     </>
   );
 };

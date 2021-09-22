@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'rsuite';
+import { Alert, Button } from 'rsuite';
+import './category-item.scss';
 
 const CategoryItem = ({ product }) => {
   const { id, name, price, currency, thumbnail, inStock } = product;
@@ -24,18 +25,17 @@ const CategoryItem = ({ product }) => {
     localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
   }, [addedToCart]);
 
-
-
-
   const addToCart = () => {
     const datas = JSON.parse(localStorage.getItem('addedToCart'));
     const costTillNow = parseInt(localStorage.getItem('totalCost'), 10);
     const data = datas.find(d => d.id === id);
     if (data) {
       data.qty += 1;
+      Alert.success('Added To Cart', 2000);
     } else {
       product.qty = 1;
       datas.push(product);
+      Alert.success('Added To Cart', 2000);
     }
 
     setAddedToCart(datas);
@@ -43,15 +43,9 @@ const CategoryItem = ({ product }) => {
     setTotalCost(cost);
   };
 
-
-  
   return (
-    <div style={{ margin: '2rem' }}>
-      <img
-        src={thumbnail}
-        alt="img"
-        style={{ width: '150px', borderRadius: '50px' }}
-      />
+    <div className="container-item">
+      <img src={thumbnail} alt="img" className="category-item-img" />
       <h4>{name}</h4>
       <h6>
         {currency} {price}
@@ -62,7 +56,7 @@ const CategoryItem = ({ product }) => {
         <h5 style={{ color: 'red' }}> Out of Stock </h5>
       )}
 
-      <Button disabled={!inStock} onClick={addToCart}>
+      <Button disabled={!inStock} onClick={addToCart} appearance='ghost' color='violet' size='md'>
         Add To Cart
       </Button>
     </div>

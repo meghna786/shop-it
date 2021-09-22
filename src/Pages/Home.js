@@ -19,9 +19,9 @@ const Home = () => {
       <Button
         componentClass={Link}
         to="/checkout"
-        color="cyan"
+        color="violet"
         className="btn-go-to-cart"
-        size='lg'
+        size="lg"
       >
         Go To Cart{' '}
       </Button>

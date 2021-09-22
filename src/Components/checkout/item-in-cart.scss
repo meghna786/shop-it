@@ -1,0 +1,52 @@
+.cart-item-container {
+  margin: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+//   justify-content: center;
+}
+
+.img-in-cart{
+      width: 200px;
+      height: 170px;
+}
+
+.info{
+margin-left: 8rem;
+margin-top: auto;
+margin-bottom: auto;
+}
+
+.btn-icon{
+      margin: 0.5rem;
+}
+
+.info-name{
+      color: black;
+      font-family: cursive;
+      font-size: 25px;
+      font-weight: 800;
+      margin-bottom: 1rem;
+}
+
+.info-price{
+      color: black;
+      font-size: 20px;
+}
+
+.info-qty{
+      color: black;
+      font-size: 20px;
+      font-weight: 500;
+}
+
+@media only screen and (max-width: 600px) {
+      .info {
+        margin:auto
+      }
+
+      .img{
+            margin:auto  
+      }
+    }
+    

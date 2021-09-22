@@ -10,11 +10,11 @@ const Categories = () => {
   const productsArray = [];
   const filteredArray = [];
   const [isChecked, setIsChecked] = useState(false);
-  const [products, setProducts]=useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setProducts(productsFile);  
-  }, [])
+    setProducts(productsFile);
+  }, []);
 
   const selectedProductsArray = productsArr => {
     productsArr.forEach(product => {
@@ -26,16 +26,17 @@ const Categories = () => {
     setIsChecked(p => !p);
   };
 
-  const filteredProductsArray= productsArr =>{
-      productsArr.forEach(product => {
-        if (product.delivery) 
-        filteredArray.push(product);
-      });
-  }
+  const filteredProductsArray = productsArr => {
+    productsArr.forEach(product => {
+      if (product.delivery) filteredArray.push(product);
+    });
+  };
 
   return (
-
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div>
+    <div
+      style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+    >
       {selectedProductsArray(products)}
       {!isChecked &&
         productsArray.length > 0 &&
@@ -48,24 +49,28 @@ const Categories = () => {
         ))}
 
       {isChecked && filteredProductsArray(productsArray)}
-        {filteredArray.length > 0 &&
+      {filteredArray.length > 0 &&
         filteredArray.map(product => (
-          <CategoryItem
-            product={product}
-            key={product.id}
-          />
+          <CategoryItem product={product} key={product.id} />
         ))}
 
-      <div>
+    </div>
+   
+    <div className="check-box">
         <Checkbox onChange={onCheck} checked={isChecked}>
           {' '}
           Delivery
         </Checkbox>
       </div>
-    <div >
-    <Button componentClass={Link} to='/checkout'>Go To Cart </Button>
-    </div>
-
+        <Button
+          componentClass={Link}
+          to="/checkout"
+          color="violet"
+          className="btn-go-to-cart btn-cart"
+        >
+          Go To Cart{' '}
+        </Button>
+    
     </div>
   );
 };
