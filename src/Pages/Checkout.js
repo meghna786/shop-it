@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ItemInCart from '../Components/checkout/ItemInCart';
+import {useCart} from '../context/cart.context'; 
 
 const Checkout = () => {
   const [totalCost, setTotalCost] = useState(() => {
@@ -10,17 +11,18 @@ const Checkout = () => {
     return 0;
   });
 
-  const [addedToCart, setAddedToCart] = useState(() => {
-    return JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  });
+  // const [addedToCart, setAddedToCart] = useState(() => {
+  //   return JSON.parse(localStorage.getItem('addedToCart') || '[]');
+  // });
+  const [addedToCart, setAddedToCart]=useCart();
 
   useEffect(() => {
     localStorage.setItem('totalCost', JSON.stringify(totalCost));
   }, [totalCost]);
 
-  useEffect(() => {
-    localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
-  }, [addedToCart]);
+  // useEffect(() => {
+  //   localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+  // }, [addedToCart]);
 
   const calcCostWhenIncDec = (element, qty = 1) => {
     const cost = totalCost + qty * element.price;
@@ -29,7 +31,8 @@ const Checkout = () => {
 
   const deleteItem = item => {
     let cost = 0;
-    const datas = JSON.parse(localStorage.getItem('addedToCart'));
+    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
+    const datas = addedToCart;
     const data = datas.find(d => d.id === item.id);
     if (data) {
       cost = totalCost - data.price * data.qty;

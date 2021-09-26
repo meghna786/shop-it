@@ -5,11 +5,13 @@ import { Route, Switch } from 'react-router';
 import Categories from './Pages/Categories';
 import Checkout from './Pages/Checkout';
 import Home from './Pages/Home';
+import { CartProvider } from './context/cart.context';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <CartProvider>
         <Switch>
           <Route exact path="/">
             <Home />
@@ -23,6 +25,7 @@ function App() {
             <Checkout />
           </Route>
         </Switch>
+        </CartProvider>
       </div>
     </BrowserRouter>
   );

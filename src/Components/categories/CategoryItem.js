@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button } from 'rsuite';
+import { useCart } from '../../context/cart.context';
 import './category-item.scss';
 
 const CategoryItem = ({ product }) => {
@@ -13,20 +14,22 @@ const CategoryItem = ({ product }) => {
     return 0;
   });
 
-  const [addedToCart, setAddedToCart] = useState(() => {
-    return JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  });
+  // const [addedToCart, setAddedToCart] = useState(() => {
+  //   return JSON.parse(localStorage.getItem('addedToCart') || '[]');
+  // });
+  const [addedToCart, setAddedToCart]=useCart();
 
   useEffect(() => {
     localStorage.setItem('totalCost', JSON.stringify(totalCost));
   }, [totalCost]);
 
-  useEffect(() => {
-    localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
-  }, [addedToCart]);
+  // useEffect(() => {
+  //   localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+  // }, [addedToCart]);
 
   const addToCart = () => {
-    const datas = JSON.parse(localStorage.getItem('addedToCart'));
+    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
+    const datas = addedToCart;
     const costTillNow = parseInt(localStorage.getItem('totalCost'), 10);
     const data = datas.find(d => d.id === id);
     if (data) {
