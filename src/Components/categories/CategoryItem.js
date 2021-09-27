@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, {useState } from 'react';
+import React from 'react';
 import { Alert, Button } from 'rsuite';
 import { useCart } from '../../context/cart.context';
 import './category-item.scss';
@@ -8,14 +7,7 @@ const CategoryItem = ({ product }) => {
   const { id, name, price, currency, thumbnail, inStock } = product;
  
   const [addedToCart, setAddedToCart]=useCart();
-  const [totalCost, setTotalCost] = useState(()=>{
-    const cartTotal = addedToCart.reduce(
-      (currentTotal, item) => currentTotal + item.price * item.qty,
-      0
-    );
-     return cartTotal || 0;  
-  });
-
+ 
   const addToCart = () => {
     const datas = [...addedToCart];
     const data = datas.find(d => d.id === id);
@@ -29,11 +21,6 @@ const CategoryItem = ({ product }) => {
     }
 
     setAddedToCart(datas);
-    const cartTotal = addedToCart.reduce(
-      (currentTotal, item) => currentTotal + item.price * item.qty,
-      0
-    );
-    setTotalCost(cartTotal);
   };
 
   return (

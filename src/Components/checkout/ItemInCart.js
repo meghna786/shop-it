@@ -3,7 +3,7 @@ import { Button, Icon } from 'rsuite';
 import { useCart } from '../../context/cart.context';
 import './item-in-cart.scss';
 
-const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
+const ItemInCart = ({ item, deleteItem }) => {
   const { id, name, price, currency, thumbnail } = item;
 
   const [addedToCart, setAddedToCart]=useCart();
@@ -23,7 +23,6 @@ const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
     }
     setQty(data.qty);
     setAddedToCart(datas);
-    calcCostWhenIncDec();
   };
 
   const decreaseQty = () => {
@@ -38,7 +37,6 @@ const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
     }
     setQty(data.qty);
     setAddedToCart(datas);
-    calcCostWhenIncDec();
   };
 
   return (
