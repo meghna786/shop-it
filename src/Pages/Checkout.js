@@ -1,47 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ItemInCart from '../Components/checkout/ItemInCart';
 import {useCart} from '../context/cart.context'; 
 
 const Checkout = () => {
-  const [totalCost, setTotalCost] = useState(() => {
-    const cost = parseInt(localStorage.getItem('totalCost'), 10);
-    if (cost) {
-      return cost;
-    }
-    return 0;
-  });
-
-  // const [addedToCart, setAddedToCart] = useState(() => {
-  //   return JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  // });
   const [addedToCart, setAddedToCart]=useCart();
 
-  useEffect(() => {
-    localStorage.setItem('totalCost', JSON.stringify(totalCost));
-  }, [totalCost]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
-  // }, [addedToCart]);
-
-  const calcCostWhenIncDec = (element, qty = 1) => {
-    const cost = totalCost + qty * element.price;
-    setTotalCost(cost);
+  const [totalCost, setTotalCost] = useState(()=>{
+    const cartTotal = addedToCart.reduce(
+      (currentTotal, item) => currentTotal + item.price * item.qty,
+      0
+    );
+     return cartTotal || 0;  
+  });
+ 
+   const calcCostWhenIncDec = () => {
+    const cartTotal = addedToCart.reduce(
+      (currentTotal, item1) => currentTotal + item1.price * item1.qty,
+      0
+    );
+    setTotalCost(cartTotal);
   };
 
   const deleteItem = item => {
-    let cost = 0;
-    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
-    const datas = addedToCart;
-    const data = datas.find(d => d.id === item.id);
-    if (data) {
-      cost = totalCost - data.price * data.qty;
-    }
-    setTotalCost(cost);
     const deletingProduct = addedToCart.filter(
       deleteThisItem => deleteThisItem.id !== item.id
     );
     setAddedToCart(deletingProduct);
+
+    const cartTotal = deletingProduct.reduce(
+      (currentTotal, item1) => currentTotal + item1.price * item1.qty,
+      0
+    );
+    setTotalCost(cartTotal);
   };
 
   return (

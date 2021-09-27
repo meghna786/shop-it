@@ -1,36 +1,23 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, {useState } from 'react';
 import { Alert, Button } from 'rsuite';
 import { useCart } from '../../context/cart.context';
 import './category-item.scss';
 
 const CategoryItem = ({ product }) => {
   const { id, name, price, currency, thumbnail, inStock } = product;
-
-  const [totalCost, setTotalCost] = useState(() => {
-    const cost = parseInt(localStorage.getItem('totalCost'), 10);
-    if (cost) {
-      return cost;
-    }
-    return 0;
+ 
+  const [addedToCart, setAddedToCart]=useCart();
+  const [totalCost, setTotalCost] = useState(()=>{
+    const cartTotal = addedToCart.reduce(
+      (currentTotal, item) => currentTotal + item.price * item.qty,
+      0
+    );
+     return cartTotal || 0;  
   });
 
-  // const [addedToCart, setAddedToCart] = useState(() => {
-  //   return JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  // });
-  const [addedToCart, setAddedToCart]=useCart();
-
-  useEffect(() => {
-    localStorage.setItem('totalCost', JSON.stringify(totalCost));
-  }, [totalCost]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
-  // }, [addedToCart]);
-
   const addToCart = () => {
-    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
-    const datas = addedToCart;
-    const costTillNow = parseInt(localStorage.getItem('totalCost'), 10);
+    const datas = [...addedToCart];
     const data = datas.find(d => d.id === id);
     if (data) {
       data.qty += 1;
@@ -42,8 +29,11 @@ const CategoryItem = ({ product }) => {
     }
 
     setAddedToCart(datas);
-    const cost = costTillNow + product.price;
-    setTotalCost(cost);
+    const cartTotal = addedToCart.reduce(
+      (currentTotal, item) => currentTotal + item.price * item.qty,
+      0
+    );
+    setTotalCost(cartTotal);
   };
 
   return (

@@ -6,39 +6,28 @@ import './item-in-cart.scss';
 const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
   const { id, name, price, currency, thumbnail } = item;
 
-  // const [addedToCart, setAddedToCart] = useState(() => {
-  //   return JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  // });
   const [addedToCart, setAddedToCart]=useCart();
 
   const [qty, setQty] = useState(() => {
-    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
-    const datas = addedToCart;
+    const datas = [...addedToCart];
     const data = datas.find(d => d.id === id);
     return data.qty;
   });
 
-  // useEffect(() => {
-  //   localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
-  // }, [addedToCart]);
 
   const increaseQty = () => {
-    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
-    const datas = addedToCart;
+    const datas = [...addedToCart];
     const data = datas.find(d => d.id === id);
     if (data) {
       data.qty += 1;
     }
-    // localStorage.setItem('addedToCart', JSON.stringify(datas));
     setQty(data.qty);
     setAddedToCart(datas);
-    calcCostWhenIncDec(data, 1);
+    calcCostWhenIncDec();
   };
 
   const decreaseQty = () => {
-    // const datas = JSON.parse(localStorage.getItem('addedToCart'));
-    // const data = datas.find(d => d.id === id);
-    const datas = addedToCart;
+    const datas = [...addedToCart];
     const data = datas.find(d => d.id === id);
     if (data) {
       if (data.qty === 1) {
@@ -47,10 +36,9 @@ const ItemInCart = ({ item, deleteItem, calcCostWhenIncDec }) => {
       }
       data.qty -= 1;
     }
-    localStorage.setItem('addedToCart', JSON.stringify(datas));
     setQty(data.qty);
     setAddedToCart(datas);
-    calcCostWhenIncDec(data, -1);
+    calcCostWhenIncDec();
   };
 
   return (
