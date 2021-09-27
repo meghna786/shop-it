@@ -26,30 +26,30 @@ const reducer = (
       );
       return deletingProduct;
     }
-      case 'INCREASE_QTY':{
-        const datas = [...addedToCart];
-        const data = datas.find(d => d.id === action.id);
-        if (data) {
-          data.qty += 1;
-        }
-        return datas;
+    case 'INCREASE_QTY': {
+      const datas = [...addedToCart];
+      const data = datas.find(d => d.id === action.id);
+      if (data) {
+        data.qty += 1;
       }
+      return datas;
+    }
 
-      case 'DECREASE_QTY':{
-        const datas = [...addedToCart];
-        const data = datas.find(d => d.id === action.id);
-        if (data) {
-          if (data.qty === 1) {
-           return action.dispatch({
-              type:'DELETE_FROM_CART',
-              id:action.id,
-              item:action.item
-            })
-          }
-          data.qty -= 1;
+    case 'DECREASE_QTY': {
+      const datas = [...addedToCart];
+      const data = datas.find(d => d.id === action.id);
+      if (data) {
+        if (data.qty === 1) {
+          return action.dispatch({
+            type: 'DELETE_FROM_CART',
+            id: action.id,
+            item: action.item,
+          });
         }
-        return datas;
+        data.qty -= 1;
       }
+      return datas;
+    }
     default:
       return addedToCart;
   }
@@ -58,8 +58,8 @@ const reducer = (
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const initialState=JSON.parse(localStorage.getItem('addedToCart') || '[]');
-  const [addedToCart, dispatch] = useReducer(reducer,initialState);
+  const initialState = JSON.parse(localStorage.getItem('addedToCart') || '[]');
+  const [addedToCart, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
