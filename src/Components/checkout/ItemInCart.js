@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Icon } from 'rsuite';
 import { useCart } from '../../context/cart.context';
 import './item-in-cart.scss';
@@ -6,37 +6,26 @@ import './item-in-cart.scss';
 const ItemInCart = ({ item, deleteItem }) => {
   const { id, name, price, currency, thumbnail } = item;
 
-  const [addedToCart, setAddedToCart]=useCart();
+  const [addedToCart, dispatch]=useCart();
 
-  const [qty, setQty] = useState(() => {
-    const datas = [...addedToCart];
-    const data = datas.find(d => d.id === id);
-    return data.qty;
-  });
 
+  const data=addedToCart.find(d=>d.id===id);
+  const {qty} = data;
 
   const increaseQty = () => {
-    const datas = [...addedToCart];
-    const data = datas.find(d => d.id === id);
-    if (data) {
-      data.qty += 1;
-    }
-    setQty(data.qty);
-    setAddedToCart(datas);
+ dispatch({
+   type:'INCREASE_QTY',
+   id
+ })
   };
 
   const decreaseQty = () => {
-    const datas = [...addedToCart];
-    const data = datas.find(d => d.id === id);
-    if (data) {
-      if (data.qty === 1) {
-        deleteItem(item);
-        return;
-      }
-      data.qty -= 1;
-    }
-    setQty(data.qty);
-    setAddedToCart(datas);
+    dispatch({
+      type:'DECREASE_QTY',
+      id,
+      item,
+      dispatch
+    })
   };
 
   return (

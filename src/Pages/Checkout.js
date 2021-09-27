@@ -1,21 +1,21 @@
 import React from 'react';
 import ItemInCart from '../Components/checkout/ItemInCart';
-import {useCart} from '../context/cart.context'; 
+import { useCart} from '../context/cart.context'; 
 
 const Checkout = () => {
-  const [addedToCart, setAddedToCart]=useCart();
+  const [addedToCart, dispatch]=useCart();
 
   const cartTotal = addedToCart.reduce(
     (currentTotal, item) => currentTotal + item.price * item.qty,
     0
   );
-  
+ 
 
   const deleteItem = item => {
-    const deletingProduct = addedToCart.filter(
-      deleteThisItem => deleteThisItem.id !== item.id
-    );
-    setAddedToCart(deletingProduct);
+    dispatch({
+      type:'DELETE_FROM_CART',
+      item
+    });
   };
 
 

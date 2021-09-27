@@ -1,26 +1,21 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Alert, Button } from 'rsuite';
+import { Button } from 'rsuite';
 import { useCart } from '../../context/cart.context';
 import './category-item.scss';
 
 const CategoryItem = ({ product }) => {
   const { id, name, price, currency, thumbnail, inStock } = product;
  
-  const [addedToCart, setAddedToCart]=useCart();
+  const [addedToCart, dispatch]=useCart();
+ 
  
   const addToCart = () => {
-    const datas = [...addedToCart];
-    const data = datas.find(d => d.id === id);
-    if (data) {
-      data.qty += 1;
-      Alert.success('Added To Cart', 2000);
-    } else {
-      product.qty = 1;
-      datas.push(product);
-      Alert.success('Added To Cart', 2000);
-    }
-
-    setAddedToCart(datas);
+    dispatch({
+      type:'ADD_TO_CART',
+      id,
+      product
+    });
   };
 
   return (
