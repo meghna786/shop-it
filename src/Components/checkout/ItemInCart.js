@@ -13,7 +13,7 @@ const ItemInCart = ({ item, deleteItem }) => {
 
   const increaseQty = () => {
     dispatch({
-      type: 'INCREASE_QTY',
+      type: 'ADD_TO_CART',
       id,
     });
   };
@@ -22,8 +22,7 @@ const ItemInCart = ({ item, deleteItem }) => {
     dispatch({
       type: 'DECREASE_QTY',
       id,
-      item,
-      dispatch,
+      item
     });
   };
 

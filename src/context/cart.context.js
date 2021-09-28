@@ -26,25 +26,16 @@ const reducer = (
       );
       return deletingProduct;
     }
-    case 'INCREASE_QTY': {
-      const datas = [...addedToCart];
-      const data = datas.find(d => d.id === action.id);
-      if (data) {
-        data.qty += 1;
-      }
-      return datas;
-    }
 
     case 'DECREASE_QTY': {
       const datas = [...addedToCart];
       const data = datas.find(d => d.id === action.id);
       if (data) {
         if (data.qty === 1) {
-          return action.dispatch({
-            type: 'DELETE_FROM_CART',
-            id: action.id,
-            item: action.item,
-          });
+          const deletingProduct = addedToCart.filter(
+            deleteThisItem => deleteThisItem.id !== action.item.id
+          );
+          return deletingProduct;
         }
         data.qty -= 1;
       }
